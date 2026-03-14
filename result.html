@@ -291,7 +291,7 @@
 
 
 
- "Final Test-2082": {
+ "Final Test": {
         fullMarks: 30,
         students: [
 {name:"Aarohi Sharma",class:"7",symbol:"B1",subject:"सामाजिक अध्ययन",marks:6},
@@ -412,22 +412,47 @@
 
 
 
-        resultBox.innerHTML = `
-          <h3>📘 ${selectedExam} Result 📘</h3>
-          <p><strong>Student:</strong> ${student.name}</p>
-          <p><strong>Class:</strong> ${student.class}</p>
-          <p><strong>Symbol No:</strong> ${student.symbol}</p>
-          <p><strong>Subject:</strong> ${student.subject}</p>
-          <p><strong>Grade:</strong> 
-            <span class="grade-badge grade-${grade.replace('+','plus')}">${grade}</span>
-          </p>
-          <div class="progress">
-            <div class="progress-bar" style="width:${percentage}%"></div>
-          </div>
-          <p><strong>Remarks:</strong> ${remarks}</p>
-          ${grade === "NG" 
-            ? `<p style="color:yellow;"><strong>${student.name}</strong>💪तिम्रो निरन्तर प्रयास नै तिम्रा लागि सफलताको कसी हो, फेरी प्रयास गर्नु तिम्रो सबैभन्दा ठूलो उपलब्धि हो I</span> <span style="color:white; font-weight:bold; font-size:20px;">- Brp Sir</span></span>
-           ` : `<button onclick='viewMarks(${student.marks}, ${examData.fullMarks})'>📑 View Your Marks</button>`}`;
+resultBox.innerHTML = `
+<h3>📘 ${selectedExam} Result 📘</h3>
+<p><strong>Student:</strong> ${student.name}</p>
+<p><strong>Class:</strong> ${student.class}</p>
+<p><strong>Symbol No:</strong> ${student.symbol}</p>
+<p><strong>Subject:</strong> ${student.subject}</p>
+
+<p><strong>Grade:</strong> 
+<span class="grade-badge grade-${grade.replace('+','plus')}">${grade}</span>
+</p>
+
+<div class="progress">
+<div class="progress-bar" style="width:${percentage}%"></div>
+</div>
+
+<p><strong>Remarks:</strong> ${remarks}</p>
+
+${grade === "NG" 
+? `<p style="color:black;">
+<strong>${student.name}</strong> 💪💪 तिम्रो निरन्तर प्रयास नै तिम्रा लागि सफलताको कसी हो,
+फेरी प्रयास गर्नु तिम्रो सबैभन्दा ठूलो उपलब्धि हो।
+<span style="color:#4d0099;font-weight:bold;font-size:20px;"> - Brp sir</span>
+</p>` 
+: `
+<button onclick="viewMarks(${student.marks}, ${examData.fullMarks})">
+📑 View Your Marks
+</button>
+
+
+${grade === "A+" ? `
+<br><br>
+<button onclick="generateCertificate('${student.name}','${student.subject}','${selectedExam}')">
+🏆 Get Achievement
+</button>
+` : ""}
+`
+}
+`;
+
+
+
 
 
 
@@ -444,6 +469,14 @@
       marksBox.innerHTML = `<h4>📑 Marks Obtained:</h4><strong>${marks} / ${fullMarks}</strong>`;
       marksBox.style.display = "block";
     }
+function generateCertificate(name, subject, exam){
+  localStorage.setItem("certName", name);
+  localStorage.setItem("certSubject", subject);
+  localStorage.setItem("certExam", exam);
+
+  window.open("stud_certificate.html","_blank");
+}
+
 
     // Disable F12 and dev tools
     document.addEventListener('keydown', function(e) {
@@ -462,4 +495,3 @@
   </script>
 </body>
 </html>
-
