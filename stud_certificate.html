@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Certificate</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- PDF Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+body{
+margin:0;
+background:#eee;
+text-align:center;
+font-family:'Poppins',sans-serif;
+}
+
+.cert{
+position:relative;
+width:95%;
+max-width:900px;
+margin:auto;
+}
+
+.cert img{
+width:100%;
+}
+
+.name{
+position:absolute;
+top:54%;
+left:0;
+right:0;
+font-size:5vw;
+font-family:'Playfair Display',serif;
+font-weight:800;
+color:white;
+letter-spacing:1px;
+}
+
+.text{
+position:absolute;
+top:62%;
+left:10%;
+right:10%;
+font-size:2.1vw;
+font-family:'Poppins',sans-serif;
+color:white;
+line-height:1.6;
+}
+
+.congrats{
+font-family:'Playfair Display', serif;
+font-size:3vw;
+color:#ffd700;
+font-weight:700;
+letter-spacing:1px;
+}
+.date{
+position:absolute;
+bottom:14%;
+left:12%;
+font-size:2vw;
+color:white;
+}
+
+.downloadbtn{
+margin:20px;
+padding:12px 25px;
+font-size:18px;
+border:none;
+background:#2c7be5;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+.downloadbtn:hover{
+background:#1a5fd0;
+}
+
+</style>
+</head>
+
+<body>
+
+<button class="downloadbtn" onclick="downloadPDF()">Download Certificate</button>
+
+<div class="cert" id="certificate">
+
+<img src="stud_certificate.jpg">
+
+<div class="name" id="name"></div>
+
+<div class="text" id="text"></div>
+
+<div class="date" id="date"></div>
+
+</div>
+
+<script>
+
+const name = localStorage.getItem("certName");
+const subject = localStorage.getItem("certSubject");
+const exam = localStorage.getItem("certExam");
+
+document.getElementById("name").innerText = name;
+
+document.getElementById("text").innerHTML =
+"<span class='congrats'>Congratulations!</span><br>" +
+"For achieving an <b>Outstanding A+ Grade</b> in " +
+subject + " during the " + exam +
+". Your dedication and excellence are highly appreciated.";
+
+
+
+/* Auto Date */
+
+const today = new Date();
+
+const day = today.getDate();
+const month = today.toLocaleString('default',{month:'long'});
+const year = today.getFullYear();
+
+document.getElementById("date").innerText =
+day + " " + month + " " + year;
+
+
+/* Download PDF */
+
+function downloadPDF(){
+
+html2canvas(document.querySelector("#certificate")).then(canvas => {
+
+const imgData = canvas.toDataURL("image/png");
+
+const { jsPDF } = window.jspdf;
+
+const pdf = new jsPDF('landscape');
+
+pdf.addImage(imgData,'PNG',10,10,270,150);
+
+pdf.save(name+"_certificate.pdf");
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
