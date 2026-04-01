@@ -605,15 +605,16 @@ ${grade === "NG"
 
 
 ${grade === "A+" ? `
-<br><br>
-<button onclick="generateCertificate('${student.name}','${student.subject}','${selectedExam}')">
-🏆 Get Achievement
-</button>
-` : ""}
-`
-}
-`;
+  <br><br>
+  <button onclick="generateCertificate('${student.name}','${student.subject}','${selectedExam}')">
+    🏆 Get Achievement
+  </button>
 
+  <br><br>
+  <button onclick="window.location.href='who are you.html'">
+    Who are you?
+  </button>
+` : ""}
 
 
 
@@ -638,6 +639,7 @@ function generateCertificate(name, subject, exam){
   localStorage.setItem("certExam", exam);
 
   window.open("stud_certificate.html","_blank");
+
 }
 
 
